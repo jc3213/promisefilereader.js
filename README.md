@@ -1,4 +1,4 @@
-## Usage
+## promisefilereader.js
 
 ### Download
 [Latest](https://jc3213.github.io/promisefilereader.js/filereader.js)
