@@ -1,28 +1,28 @@
 class PromiseFileReader {
-    static #read (method, file) {
+    static #read (method, blob) {
         return new Promise((resolve, reject) => {
             let reader = new FileReader();
             reader.onload = (event) => resolve(event.target.result);
             reader.onerror = reject;
-            reader[method](file);
+            reader[method](blob);
         });
     }
-    static text (file) {
-        return PromiseFileReader.#read('readAsText', file);
+    static text (blob) {
+        return PromiseFileReader.#read('readAsText', blob);
     }
-    static arrayBuffer (file) {
-        return PromiseFileReader.#read(file, 'readAsArrayBuffer');
+    static arrayBuffer (blob) {
+        return PromiseFileReader.#read('readAsArrayBuffer', blob);
     }
-    static binaryString (file) {
-        return PromiseFileReader.#read(file, 'readAsBinaryString');
+    static binaryString (blob) {
+        return PromiseFileReader.#read('readAsBinaryString', blob);
     }
-    static dataURL (file) {
-        return PromiseFileReader.#read(file, 'readAsDataURL');
+    static dataURL (blob) {
+        return PromiseFileReader.#read('readAsDataURL', blob);
     }
-    static json (file) {
-        return PromiseFileReader.#read(file, 'readAsText').then((str) => JSON.parse(str));
+    static json (blob) {
+        return PromiseFileReader.text(blob).then((string) => JSON.parse(string));
     }
-    static base64 (file) {
-        return PromiseFileReader.#read(file, 'readAsDataURL').then((str) => str.slice(str.indexOf(',') + 1));
+    static base64 (blob) {
+        return PromiseFileReader.dataURL(blob).then((string) => string.slice(string.indexOf(',') + 1));
     }
 }
